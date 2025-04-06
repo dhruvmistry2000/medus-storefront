@@ -28,6 +28,10 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
+    - name: Import existing ECS IAM Role (if needed)
+      run: |
+        terraform import aws_iam_role.ecs_task_execution_role ecs-task-execution-role || echo "Role already imported or doesn't exist in config"
+
     - name: Terraform Plan
       run: terraform plan
 
@@ -36,5 +40,3 @@ jobs:
 
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
-      # Uncomment the line below to destroy the infrastructure
-      # This will remove all resources created by Terraform
